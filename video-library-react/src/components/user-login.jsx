@@ -44,22 +44,18 @@ function UserLogin() {
     },
     onSubmit: (values) => {
       axios.get(`${process.env.BACKEND_URL}/get-users`).then((response) => {
-        const user = response.data.find(
-          (item) => item.UserId === values.username
-        );
+        const users = Array.isArray(response.data) ? response.data : [];
+        const user = users.find((item) => item.UserId === values.username);
         if (user) {
           if (user.Password === values.password) {
             showLoading();
             setCookie("username", user.UserName);
-            // MySwal.hideLoading();
             navigate("/user-dashboard");
           } else {
-            // alert("Invalid password");
             MySwal.fire("Invalid password");
           }
         } else {
           MySwal.fire("Invalid username");
-          // alert("Invalid username");
         }
       });
     },
