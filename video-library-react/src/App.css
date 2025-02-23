@@ -1,0 +1,69 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.body-background {
+  background: url("https://img.freepik.com/free-photo/cyborg-businessman-looking-city-with-headset-generated-by-ai_188544-28229.jpg?ga=GA1.1.1545910279.1730647621&semt=ais_hybrid");
+  height: 100vh;
+  background-size: cover;
+  /* filter: blur(3px); */
+}
+
+.bg-shade {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 2px solid rgb(56, 55, 55);
+  margin: 5px;
+}
+
+.divider span {
+  padding: 0 10px;
+  /* font-weight: bold; */
+}
