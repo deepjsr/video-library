@@ -17,5 +17,8 @@
     "express": "^4.21.2",
     "mongodb": "^6.12.0",
     "server-app": "file:"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
