@@ -12,7 +12,7 @@ function AdminLogin() {
     },
     onSubmit: (values) => {
       console.log(values);
-      axios.get("http://localhost:3020/get-admin").then((response) => {
+      axios.get(`${process.env.BACKEND_URL}/get-admin`).then((response) => {
         console.log(response.data);
         const user = response.data.find(
           (item) => item.UserId === values.username

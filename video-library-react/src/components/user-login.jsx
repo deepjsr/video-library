@@ -44,7 +44,7 @@ function UserLogin() {
     },
     onSubmit: (values) => {
       console.log(values);
-      axios.get("http://localhost:3020/get-users").then((response) => {
+      axios.get(`${process.env.BACKEND_URL}/get-users`).then((response) => {
         console.log(response.data);
 
         const user = response.data.find(

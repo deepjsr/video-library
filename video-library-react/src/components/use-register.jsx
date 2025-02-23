@@ -19,16 +19,18 @@ function UserRegister() {
       console.log(values);
       const MySwal = withReactContent(Swal);
 
-      axios.post("http://localhost:3020/add-user", values).then((response) => {
-        console.log(response.data);
-        // alert("data saved...");
-        MySwal.fire({
-          title: "Saved!",
-          text: "User has been registered",
-          icon: "success",
+      axios
+        .post(`${process.env.BACKEND_URL}/add-user`, values)
+        .then((response) => {
+          console.log(response.data);
+          // alert("data saved...");
+          MySwal.fire({
+            title: "Saved!",
+            text: "User has been registered",
+            icon: "success",
+          });
+          navigate("/user-dashboard");
         });
-        navigate("/user-dashboard");
-      });
     },
   });
   return (

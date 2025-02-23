@@ -22,7 +22,7 @@ function AddVideo() {
       Comments: [""],
     },
     onSubmit: (video) => {
-      axios.post("http://localhost:3020/add-video", video);
+      axios.post(`${process.env.BACKEND_URL}/add-video`, video);
       Swal.showLoading();
       alert("Video added successfully");
       navigate("/admin-dashboard");
@@ -31,7 +31,7 @@ function AddVideo() {
   });
 
   useEffect(() => {
-    axios.get("http://localhost:3020/get-categories").then((resp) => {
+    axios.get(`${process.env.BACKEND_URL}/get-categories`).then((resp) => {
       resp.data.unshift({
         CatagoryId: -1,
         CatagoryName: "Select a category",

@@ -49,7 +49,7 @@ function UserDashboard() {
   }
   const [catagories, setCatagories] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:3020/get-categories").then(
+    axios.get(`${process.env.BACKEND_URL}/get-categories`).then(
       (catagory) => (
         catagory.data.unshift({
           CategoryId: -1,
@@ -58,7 +58,7 @@ function UserDashboard() {
         setCatagories(catagory.data)
       )
     );
-    LoadVideos("http://localhost:3020/get-videos");
+    LoadVideos(`${process.env.BACKEND_URL}/get-videos`);
   }, []);
 
   function handelWatchLater() {}
@@ -66,10 +66,10 @@ function UserDashboard() {
   function handelCatagoryChange(selectedCatagory) {
     if (selectedCatagory.target.value > 0) {
       LoadVideos(
-        `http://localhost:3020/filter-videos/${selectedCatagory.target.value}`
+        `${process.env.BACKEND_URL}/filter-videos/${selectedCatagory.target.value}`
       );
     } else {
-      LoadVideos(`http://localhost:3020/get-videos`);
+      LoadVideos(`${process.env.BACKEND_URL}/get-videos`);
     }
   }
 

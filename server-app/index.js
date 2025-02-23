@@ -6,11 +6,14 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 dotenv.config();
-
+const coresOptions = {
+  origin: "https://video-library-29yf.onrender.com",
+  credentials: true,
+};
 const app = express();
 const port = process.env.PORT || 3020;
 
-app.use(cors());
+app.use(cors(coresOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

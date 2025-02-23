@@ -22,7 +22,7 @@ function EditVideo() {
   let params = useParams();
 
   function LoadCatagories() {
-    axios.get(`http://localhost:3020/get-categories`).then((resp) => {
+    axios.get(`${process.env.BACKEND_URL}/get-categories`).then((resp) => {
       resp.data.unshift({
         CatagoryId: -1,
         CatagoryName: "Select a catagory",
@@ -46,7 +46,7 @@ function EditVideo() {
     },
     onSubmit: (values) => {
       axios
-        .put(`http://localhost:3020/update-video/${params.id}`, values)
+        .put(`${process.env.BACKEND_URL}/update-video/${params.id}`, values)
         .then((resp) => console.log(resp, "video edited"));
       alert("Video Edited successfully...");
       navigate("/admin-dashboard");
@@ -57,9 +57,11 @@ function EditVideo() {
   useEffect(() => {
     LoadCatagories();
 
-    axios.get(`http://localhost:3020/get-videos/${params.id}`).then((resp) => {
-      setVideo(resp.data);
-    });
+    axios
+      .get(`${process.env.BACKEND_URL}/get-videos/${params.id}`)
+      .then((resp) => {
+        setVideo(resp.data);
+      });
   }, []);
 
   return (

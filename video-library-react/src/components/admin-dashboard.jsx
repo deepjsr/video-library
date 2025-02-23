@@ -30,7 +30,7 @@ function AdminDashboard() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:3020/delete-video/${e}`);
+        axios.delete(`${process.env.BACKEND_URL}/delete-video/${e}`);
         Swal.fire({
           title: "Deleted!",
           text: "Your file has been deleted.",
@@ -42,7 +42,7 @@ function AdminDashboard() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3020/get-videos")
+      .get(`${process.env.BACKEND_URL}/get-videos`)
       .then((response) => {
         setVideo(response.data);
         setLoading(false);
