@@ -43,10 +43,7 @@ function UserLogin() {
       password: "",
     },
     onSubmit: (values) => {
-      console.log(values);
       axios.get(`${process.env.BACKEND_URL}/get-users`).then((response) => {
-        console.log(response.data);
-
         const user = response.data.find(
           (item) => item.UserId === values.username
         );
