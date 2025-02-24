@@ -22,7 +22,7 @@ function AddVideo() {
       Comments: [""],
     },
     onSubmit: (video) => {
-      axios.post(`${process.env.BACKEND_URL}/add-video`, video);
+      axios.post(`https://video-library-29yf.onrender.com/add-video`, video);
       Swal.showLoading();
       alert("Video added successfully");
       navigate("/admin-dashboard");
@@ -31,13 +31,15 @@ function AddVideo() {
   });
 
   useEffect(() => {
-    axios.get(`${process.env.BACKEND_URL}/get-categories`).then((resp) => {
-      resp.data.unshift({
-        CatagoryId: -1,
-        CatagoryName: "Select a category",
+    axios
+      .get(`https://video-library-29yf.onrender.com/get-categories`)
+      .then((resp) => {
+        resp.data.unshift({
+          CatagoryId: -1,
+          CatagoryName: "Select a category",
+        });
+        setCatagories(resp.data);
       });
-      setCatagories(resp.data);
-    });
   }, []);
   return (
     <div>

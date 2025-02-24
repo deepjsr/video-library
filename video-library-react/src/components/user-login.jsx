@@ -43,21 +43,23 @@ function UserLogin() {
       password: "",
     },
     onSubmit: (values) => {
-      axios.get(`${process.env.BACKEND_URL}/get-users`).then((response) => {
-        const users = Array.isArray(response.data) ? response.data : [];
-        const user = users.find((item) => item.UserId === values.username);
-        if (user) {
-          if (user.Password === values.password) {
-            showLoading();
-            setCookie("username", user.UserName);
-            navigate("/user-dashboard");
+      axios
+        .get(`https://video-library-29yf.onrender.com/get-users`)
+        .then((response) => {
+          const users = Array.isArray(response.data) ? response.data : [];
+          const user = users.find((item) => item.UserId === values.username);
+          if (user) {
+            if (user.Password === values.password) {
+              showLoading();
+              setCookie("username", user.UserName);
+              navigate("/user-dashboard");
+            } else {
+              MySwal.fire("Invalid password");
+            }
           } else {
-            MySwal.fire("Invalid password");
+            MySwal.fire("Invalid username");
           }
-        } else {
-          MySwal.fire("Invalid username");
-        }
-      });
+        });
     },
   });
   return (

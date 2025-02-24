@@ -49,7 +49,7 @@ function UserDashboard() {
   }
   const [catagories, setCatagories] = useState([]);
   useEffect(() => {
-    axios.get(`${process.env.BACKEND_URL}/get-categories`).then(
+    axios.get(`https://video-library-29yf.onrender.com/get-categories`).then(
       (catagory) => (
         catagory.data.unshift({
           CategoryId: -1,
@@ -58,7 +58,7 @@ function UserDashboard() {
         setCatagories(catagory.data)
       )
     );
-    LoadVideos(`${process.env.BACKEND_URL}/get-videos`);
+    LoadVideos(`https://video-library-29yf.onrender.com/get-videos`);
   }, []);
 
   function handelWatchLater() {}
@@ -66,10 +66,10 @@ function UserDashboard() {
   function handelCatagoryChange(selectedCatagory) {
     if (selectedCatagory.target.value > 0) {
       LoadVideos(
-        `${process.env.BACKEND_URL}/filter-videos/${selectedCatagory.target.value}`
+        `https://video-library-29yf.onrender.com/filter-videos/${selectedCatagory.target.value}`
       );
     } else {
-      LoadVideos(`${process.env.BACKEND_URL}/get-videos`);
+      LoadVideos(`https://video-library-29yf.onrender.com/get-videos`);
     }
   }
 

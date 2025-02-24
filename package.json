@@ -2,6 +2,7 @@
   "name": "server-app",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon server-app/index.js",
     "dev": "nodemon server-app/index.js",

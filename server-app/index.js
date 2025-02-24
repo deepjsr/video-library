@@ -3,12 +3,14 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
-import { fileURLToPath } from "url";
 
 dotenv.config();
 const coresOptions = {
-  origin: "https://video-library-29yf.onrender.com",
+  origin: true, // Allow all origins
+  methods: "GET,POST,PUT,DELETE",
   credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
+  exposedHeaders: ["Content-Type", "Authorization"],
 };
 const app = express();
 const port = process.env.PORT || 3020;
@@ -17,13 +19,15 @@ app.use(cors(coresOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const connectionString = process.env.MONGO_URI;
-
-const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.resolve();
 
-async function connectToDB(url) {
-  const client = await MongoClient.connect(url);
+async function connectToDB() {
+  const connectionString = process.env.MONGO_URI;
+  if (!connectionString) {
+    throw new Error("MONGO_URI is not defined");
+  }
+  const client = new MongoClient(connectionString);
+  await client.connect();
   return client;
 }
 
@@ -34,7 +38,7 @@ const dbName = "videodb";
 
 // Get all ADMIN
 app.get("/get-admin", (req, res) => {
-  connectToDB(connectionString)
+  connectToDB()
     .then((client) => {
       let database = client.db("videoDB");
       database
@@ -55,7 +59,7 @@ app.get("/get-admin", (req, res) => {
 
 // Get all VIDEOS
 app.get("/get-videos", (req, res) => {
-  connectToDB(connectionString)
+  connectToDB()
     .then((client) => {
       let database = client.db("videoDB");
       database
@@ -76,7 +80,7 @@ app.get("/get-videos", (req, res) => {
 
 // Get all USERS
 app.get("/get-users", (req, res) => {
-  connectToDB(connectionString)
+  connectToDB()
     .then((client) => {
       let database = client.db("videoDB");
       database
@@ -97,7 +101,7 @@ app.get("/get-users", (req, res) => {
 
 // Get all USERS by ID
 app.get("/get-users/:userId", (req, res) => {
-  connectToDB(connectionString)
+  connectToDB()
     .then((client) => {
       let database = client.db("videoDB");
       database
@@ -118,7 +122,7 @@ app.get("/get-users/:userId", (req, res) => {
 
 // Get all VIDEOS by ID
 app.get("/get-videos/:id", (req, res) => {
-  connectToDB(connectionString)
+  connectToDB()
     .then((client) => {
       let database = client.db("videoDB");
       database
@@ -139,7 +143,7 @@ app.get("/get-videos/:id", (req, res) => {
 
 // Get all Filtered VIDEOS by Category id
 app.get("/filter-videos/:categoryid", (req, res) => {
-  connectToDB(connectionString).then((client) => {
+  connectToDB().then((client) => {
     let database = client.db("videoDB");
     console.log(typeof req.params.categoryid);
     database
@@ -156,7 +160,7 @@ app.get("/filter-videos/:categoryid", (req, res) => {
 
 // Get all Filtered VIDEOS by Category id
 app.get("/get-categories/:id", (req, res) => {
-  connectToDB(connectionString)
+  connectToDB()
     .then((client) => {
       let database = client.db("videoDB");
       database
@@ -175,7 +179,7 @@ app.get("/get-categories/:id", (req, res) => {
     });
 });
 app.get("/get-categories", (req, res) => {
-  connectToDB(connectionString)
+  connectToDB()
     .then((client) => {
       let database = client.db("videoDB");
       database
@@ -197,7 +201,7 @@ app.get("/get-categories", (req, res) => {
 //Post API
 // Add new USER
 app.post("/add-user", (req, res) => {
-  connectToDB(connectionString).then((client) => {
+  connectToDB().then((client) => {
     let database = client.db("videoDB");
     let user = {
       UserId: req.body.UserId,
@@ -223,7 +227,7 @@ app.post("/add-user", (req, res) => {
 
 // Add new ADMIN
 app.post("/add-admin", (req, res) => {
-  connectToDB(connectionString).then((client) => {
+  connectToDB().then((client) => {
     let database = client.db("videoDB");
     let admin = {
       UserId: req.body.UserId,
@@ -246,7 +250,7 @@ app.post("/add-admin", (req, res) => {
 
 // Add new VIDEO
 app.post("/add-video", (req, res) => {
-  connectToDB(connectionString).then((client) => {
+  connectToDB().then((client) => {
     let database = client.db("videoDB");
     let video = {
       VideoId: parseInt(req.body.VideoId),
@@ -276,7 +280,7 @@ app.post("/add-video", (req, res) => {
 
 // Add new catagory
 app.post("/add-video", (req, res) => {
-  connectToDB(connectionString).then((client) => {
+  connectToDB().then((client) => {
     let database = client.db("videoDB");
     let catagory = {
       CategoryId: parseInt(req.body.CategoryId),
@@ -299,7 +303,7 @@ app.post("/add-video", (req, res) => {
 
 // Update Video by ID
 app.put("/update-video/:id", (req, res) => {
-  connectToDB(connectionString).then((client) => {
+  connectToDB().then((client) => {
     let database = client.db("videoDB");
     let video = {
       Title: req.body.Title,
@@ -336,7 +340,7 @@ app.put("/update-video/:id", (req, res) => {
 
 //delete video by ID
 app.delete("/delete-video/:id", (req, res) => {
-  connectToDB(connectionString).then((client) => {
+  connectToDB().then((client) => {
     let database = client.db("videoDB");
     database
       .collection("tblvideos")
@@ -365,3 +369,5 @@ app.get("*", (_, res) => {
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
+
+connectToDB().catch(console.error);

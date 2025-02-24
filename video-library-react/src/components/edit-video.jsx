@@ -22,13 +22,15 @@ function EditVideo() {
   let params = useParams();
 
   function LoadCatagories() {
-    axios.get(`${process.env.BACKEND_URL}/get-categories`).then((resp) => {
-      resp.data.unshift({
-        CatagoryId: -1,
-        CatagoryName: "Select a catagory",
+    axios
+      .get(`https://video-library-29yf.onrender.com/get-categories`)
+      .then((resp) => {
+        resp.data.unshift({
+          CatagoryId: -1,
+          CatagoryName: "Select a catagory",
+        });
+        setCatagories(resp.data);
       });
-      setCatagories(resp.data);
-    });
   }
 
   let navigate = useNavigate();
@@ -46,7 +48,10 @@ function EditVideo() {
     },
     onSubmit: (values) => {
       axios
-        .put(`${process.env.BACKEND_URL}/update-video/${params.id}`, values)
+        .put(
+          `https://video-library-29yf.onrender.com/update-video/${params.id}`,
+          values
+        )
         .then((resp) => console.log(resp, "video edited"));
       alert("Video Edited successfully...");
       navigate("/admin-dashboard");
@@ -58,7 +63,7 @@ function EditVideo() {
     LoadCatagories();
 
     axios
-      .get(`${process.env.BACKEND_URL}/get-videos/${params.id}`)
+      .get(`https://video-library-29yf.onrender.com/get-videos/${params.id}`)
       .then((resp) => {
         setVideo(resp.data);
       });

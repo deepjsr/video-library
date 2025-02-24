@@ -20,9 +20,8 @@ function UserRegister() {
       const MySwal = withReactContent(Swal);
 
       axios
-        .post(`${process.env.BACKEND_URL}/add-user`, values)
+        .post(`https://video-library-29yf.onrender.com/add-user`, values)
         .then((response) => {
-          console.log(response.data);
           // alert("data saved...");
           MySwal.fire({
             title: "Saved!",

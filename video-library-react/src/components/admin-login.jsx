@@ -12,21 +12,23 @@ function AdminLogin() {
     },
     onSubmit: (values) => {
       console.log(values);
-      axios.get(`${process.env.BACKEND_URL}/get-admin`).then((response) => {
-        console.log(response.data);
-        const user = response.data.find(
-          (item) => item.UserId === values.username
-        );
-        if (user) {
-          if (user.Password === values.password) {
-            navigate("/admin-dashboard");
+      axios
+        .get(`https://video-library-29yf.onrender.com/get-admin`)
+        .then((response) => {
+          console.log(response.data);
+          const user = response.data.find(
+            (item) => item.UserId === values.username
+          );
+          if (user) {
+            if (user.Password === values.password) {
+              navigate("/admin-dashboard");
+            } else {
+              alert("Invalid password");
+            }
           } else {
-            alert("Invalid password");
+            alert("Invalid username");
           }
-        } else {
-          alert("Invalid username");
-        }
-      });
+        });
     },
   });
   return (
