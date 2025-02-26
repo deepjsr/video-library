@@ -7,9 +7,12 @@ import { addToViewLater } from "../slicer/video-slicer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import store from "../store/store";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function UserDashboard() {
   const [cookie, setCookie, removeCookie] = useCookies(["username"]);
+  const { logout } = useAuth0();
+
   const [video, setVideo] = useState([
     {
       VideoId: 0,
@@ -83,7 +86,13 @@ function UserDashboard() {
       <h3 className="d-flex justify-content-between">
         <span className="me-2">{cookie["username"]} DashBoard</span>
         <div className="btn-group" role="group">
-          <button onClick={handelLogout} className="btn btn-outline-primary ">
+          <button
+            onClick={() =>
+              logout({ logoutParams: { returnTo: window.location.origin } })
+            }
+            className="btn btn-outline-primary "
+          >
+            {" "}
             Logout
           </button>
           <button

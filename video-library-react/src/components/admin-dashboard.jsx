@@ -128,9 +128,11 @@ function AdminDashboard() {
           </tbody>
         </table>
       </div>
-      <div className="ms-3 mb-3">
-        <Link to="/" className=" btn btn-outline-light">
-          <span className=" me-2 bi bi-arrow-left-square-fill fs-2"></span>
+      <div className="ms-3">
+        <Link
+          to="/"
+          className="btn btn-sm btn-light bi bi-arrow-left-square-fill fs-5"
+        >
           {/* Back */}
         </Link>
       </div>
