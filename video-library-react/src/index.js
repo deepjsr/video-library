@@ -20,21 +20,19 @@ if (!domain || !clientId) {
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <Auth0Provider
-      domain={clientId}
-      clientId={domain}
-      authorizationParams={{
-        redirect_uri: window.location.origin,
-      }}
-    >
-      <CookiesProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </CookiesProvider>
-    </Auth0Provider>
-  </React.StrictMode>
+  <Auth0Provider
+    domain={clientId}
+    clientId={domain}
+    authorizationParams={{
+      redirect_uri: window.location.origin,
+    }}
+  >
+    <CookiesProvider>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </CookiesProvider>
+  </Auth0Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
